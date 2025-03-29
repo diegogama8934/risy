@@ -4,6 +4,8 @@ export interface Food {
   title: string;
   description: string;
   category: FoodCategory;
+  price?: number;
+  originalPrice?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

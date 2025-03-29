@@ -1,13 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, User, Settings, Home, Package, HelpCircle, Menu, ChevronDown, ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { HelpCircle } from "lucide-react";
+import { Home, Package, Store } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { LogOut, Menu, Settings, ChevronDown, User } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
-export default function UserLayout({ children }: { children: React.ReactNode }) {
+export default function ProvidersLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -52,26 +54,17 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
               </div>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <div className="flex items-center gap-2 p-2 border-b">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <User className="w-4 h-4 text-primary" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-medium">Diego Martínez García</span>
-                <span className="text-xs text-muted-foreground">diego@example.com</span>
-              </div>
-            </div>
+          <DropdownMenuContent>
             <DropdownMenuItem>
-              <User className="w-4 h-4 mr-2" />
+              <User />
               Perfil
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Settings className="w-4 h-4 mr-2" />
+              <Settings />
               Configuración
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600 focus:text-red-600">
-              <LogOut className="w-4 h-4 mr-2" />
+            <DropdownMenuItem className="text-red-600">
+              <LogOut className="text-red-600" />
               Cerrar sesión
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -86,22 +79,19 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           <nav className="flex flex-col gap-4 w-full">
-            <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <Home />
+            <Link href="/providers/home" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Home className="h-6 w-6" />
             </Link>
-            <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <Package />
+            <Link href="/providers/post" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Package className="h-6 w-6" />
             </Link>
-            <Link href="/users/orders" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <ShoppingCart className="w-5 h-5" />
-            </Link>
-            <Link href="/users/profile" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <User className="w-5 h-5" />
+            <Link href="/providers/store" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Store className="h-6 w-6" />
             </Link>
           </nav>
 
-          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-            <HelpCircle />
+          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+            <HelpCircle className="h-6 w-6" />
           </Link>
         </aside>
         <div className="w-full p-4 md:p-8">
