@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Post as IPost } from "@/interfaces/Post";
 
 
-export function Post({ title, description, images, userId, comments, userInterested, goToProvider }: IPost) {
+export function Post({ title, description, images, comments }: IPost) {
   const { id } = useParams();
   const router = useRouter();
   const singleFakePost = fakePosts.find(post => post.id === id);

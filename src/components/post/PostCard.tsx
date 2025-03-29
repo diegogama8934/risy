@@ -1,9 +1,10 @@
 import { Chip } from "../common/Chip";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Post, FoodCategory } from "@/interfaces/Post";
 
-export function FoodCard({ category, description, title, images, id }: Post) {
+export function PostCard({ category, description, title, images, id }: Post) {
   function getClassName(): string {
     if (category == FoodCategory.Compost) return "bg-lime-700 text-white";
     if (category == FoodCategory.Donation) return "bg-sky-700 text-white";
@@ -21,28 +22,58 @@ export function FoodCard({ category, description, title, images, id }: Post) {
   return (
     <Link
       href={`/users/post/${id}`}
-      className="group flex gap-4 p-6 rounded-lg border border-border/40 bg-card hover:border-border/80 transition-all duration-200 shadow-sm hover:shadow-md"
+      className="group relative block rounded-xl border border-border/40 bg-card overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-border/80"
     >
-
-      <div className="flex items-center justify-center">
-        <Image
-          src={images[0]}
-          alt={title}
-          width={100}
-          height={100}
-          className="rounded-lg !w-24 !h-24 object-cover"
-        />
+      {/* Mobile Design */}
+      <div className="sm:hidden">
+        <div className="relative w-full h-40">
+          <Image
+            src={images[0]}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold text-white">{title}</h3>
+              <Chip
+                className={`${getClassName()} rounded-full w-fit py-1 px-3 text-xs font-medium`}
+                text={getCategoryName()}
+              />
+            </div>
+            <p className="text-sm text-white/90 leading-relaxed line-clamp-2">{description}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
-          <Chip
-            className={`${getClassName()} rounded-full w-fit py-1.5 px-3 text-sm font-medium shadow-sm`}
-            text={getCategoryName()}
+      {/* Desktop Design */}
+      <div className="hidden sm:block">
+        <div className="relative w-full h-[280px]">
+          <Image
+            src={images[0]}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xl font-semibold text-white">{title}</h3>
+              <Chip
+                className={`${getClassName()} rounded-full w-fit py-1.5 px-3 text-sm font-medium`}
+                text={getCategoryName()}
+              />
+            </div>
+            <p className="text-base text-white/90 leading-relaxed line-clamp-2 mb-4">{description}</p>
+            <div className="flex items-center text-white/80 text-sm font-medium">
+              Ver más
+              <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" />
+            </div>
+          </div>
         </div>
-        <p className="text-muted-foreground leading-relaxed line-clamp-2">{description}</p>
       </div>
     </Link>
   );
