@@ -1,37 +1,43 @@
 "use client";
 
+import { fakePosts } from "@/constants/Post";
 import { useParams } from "next/navigation";
-import { fakeFoods } from "@/constants/Food";
 import { Input, Image as AntImage, Divider } from "antd";
 import { fakeComments } from "@/constants/User";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 
 export default function FoodPage() {
   const { id } = useParams();
-  const singleFakeFood = fakeFoods.find(food => food.id === id);
+  const singleFakePost = fakePosts.find(post => post.id === id);
+  const router = useRouter();
 
   return (
     <div className="flex flex-col gap-4 p-8 w-full border rounded-2xl bg-white">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold ">{singleFakeFood?.title}</h1>
-        <Button>Me interesa</Button>
+        <h1 className="text-2xl font-bold ">{singleFakePost?.title}</h1>
+        <Button
+          onClick={() => router.push(`/users/providers/${singleFakePost?.userId}`)}
+        >
+          Me interesa
+        </Button>
       </div>
 
       <div className="flex flex-col gap-4">
         <div className="flex-1">
-          <p>{singleFakeFood?.description}</p>
+          <p>{singleFakePost?.description}</p>
         </div>
 
         <div className="flex-1 flex gap-2 flex-wrap">
           {
-            fakeFoods.map(fakeFood => {
+            fakePosts.map(fakePost => {
               return (
                 <AntImage
-                  key={fakeFood.id}
-                  src={fakeFood.image}
-                  alt={fakeFood.title}
+                  key={fakePost.id}
+                  src={fakePost.images[0]}
+                  alt={fakePost.title}
                   width={192}
                   height={192}
                   className="object-cover rounded-lg"

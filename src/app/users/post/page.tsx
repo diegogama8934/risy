@@ -1,8 +1,8 @@
 
-import { FoodCard } from "@/components/food/FoodCard";
+import { FoodCard } from "@/components/post/PostCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { fakeFoods } from "@/constants/Food";
+import { fakePosts } from "@/constants/Post";
 
 
 export default function FoodPage({ }) {
@@ -16,7 +16,7 @@ export default function FoodPage({ }) {
       </form>
 
 
-      {fakeFoods.map(fakeFood => <FoodCard key={fakeFood.id} {...fakeFood} />)}
+      {fakePosts.map(fakePost => <FoodCard key={fakePost.id} {...fakePost} />)}
     </div>
   )
 }

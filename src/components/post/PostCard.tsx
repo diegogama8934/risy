@@ -1,10 +1,9 @@
-import { Food, FoodCategory } from "@/interfaces/Food";
 import { Chip } from "../common/Chip";
 import Image from "next/image";
 import Link from "next/link";
+import { Post, FoodCategory } from "@/interfaces/Post";
 
-
-export function FoodCard({ category, description, title, image, id }: Food) {
+export function FoodCard({ category, description, title, images, id }: Post) {
   function getClassName(): string {
     if (category == FoodCategory.Compost) return "bg-lime-700 text-white";
     if (category == FoodCategory.Donation) return "bg-sky-700 text-white";
@@ -21,13 +20,13 @@ export function FoodCard({ category, description, title, image, id }: Food) {
 
   return (
     <Link
-      href={`/users/food/${id}`}
+      href={`/users/post/${id}`}
       className="group flex gap-4 p-6 rounded-lg border border-border/40 bg-card hover:border-border/80 transition-all duration-200 shadow-sm hover:shadow-md"
     >
 
       <div className="flex items-center justify-center">
         <Image
-          src={image}
+          src={images[0]}
           alt={title}
           width={100}
           height={100}
