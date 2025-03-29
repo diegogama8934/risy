@@ -21,7 +21,7 @@ export default function LoginPage() {
   };
 
 
-  const { mutate: loginProviderFn, isPending } = useMutation({
+  const { mutate: loginProviderFn, isPending, error } = useMutation({
     mutationFn: loginProvider,
     onSuccess,
   });
@@ -45,6 +45,7 @@ export default function LoginPage() {
         <Input type="password" placeholder="Password" name="password" value={form.password} onChange={handleChange} />
         <Button disabled={isPending} type="submit">Login</Button>
       </form>
+      {error && <p className="text-red-500">{error.message}</p>}
     </div>
   );
 }

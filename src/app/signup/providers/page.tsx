@@ -21,7 +21,7 @@ export default function SignupProvidersPage() {
     router.push("/");
   };
 
-  const { mutate: signupProviderFn, isPending } = useMutation({
+  const { mutate: signupProviderFn, isPending, error } = useMutation({
     mutationFn: signupProvider,
     onSuccess,
   });
@@ -44,6 +44,7 @@ export default function SignupProvidersPage() {
         <Input type="password" placeholder="Password" name="password" value={form.password} onChange={handleChange} />
         <Button disabled={isPending} type="submit">Signup</Button>
       </form>
+      {error && <p className="text-red-500">{error.message}</p>}
     </div>
   );
 }

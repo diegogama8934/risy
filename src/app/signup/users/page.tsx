@@ -25,7 +25,7 @@ export default function SignupPage() {
     router.push("/login");
   };
 
-  const { mutate: signupUser, isPending } = useMutation({
+  const { mutate: signupUser, isPending, error } = useMutation({
     mutationFn: signup,
     onSuccess,
   });
@@ -50,6 +50,7 @@ export default function SignupPage() {
         <Input type="text" placeholder="Address" name="address" value={form.address} onChange={handleChange} />
         <Button disabled={isPending} type="submit">Signup</Button>
       </form>
+      {error && <p className="text-red-500">{error.message}</p>}
     </div>
   );
 }
