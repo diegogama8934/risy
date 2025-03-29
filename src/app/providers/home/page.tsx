@@ -44,7 +44,7 @@ export default function ProvidersHomePage() {
   const stats = calculateStats();
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-white rounded-lg shadow">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Provider Dashboard</h1>
         <select className="border p-2 rounded">
