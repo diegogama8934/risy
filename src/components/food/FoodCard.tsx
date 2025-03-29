@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export function FoodCard({ category, description, title, image, id }: Food) {
   function getClassName(): string {
-    if (category == FoodCategory.Compost) return "bg-lime-700/90 text-white";
-    if (category == FoodCategory.Donation) return "bg-sky-700/90 text-white";
-    if (category == FoodCategory.Sale) return "bg-purple-700/90 text-white";
+    if (category == FoodCategory.Compost) return "bg-lime-700 text-white";
+    if (category == FoodCategory.Donation) return "bg-sky-700 text-white";
+    if (category == FoodCategory.Sale) return "bg-purple-700 text-white";
     return "";
   }
 
