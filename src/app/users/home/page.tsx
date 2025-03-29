@@ -1,7 +1,6 @@
 "use client";
 
 import { PostCard } from "@/components/post/PostCard";
-import { fakePosts } from "@/constants/Post";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PromotionedPostCard } from "@/components/post/PromotionedPostCard";

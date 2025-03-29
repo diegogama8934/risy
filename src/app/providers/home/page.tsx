@@ -1,13 +1,12 @@
 "use client";
-import { fakePosts } from "@/constants/Post";
-import { FoodCategory } from "@/interfaces/Post";
-import { 
-  Area, 
+import { FoodCategory, Post } from "@/interfaces/Post";
+import {
+  Area,
   Line,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   Legend,
   ComposedChart,
@@ -21,11 +20,13 @@ import { Input, Select, Modal, Form, message, UploadFile } from 'antd';
 import { useState } from 'react';
 import { createPost } from '@/service/post/create';
 import Image from 'next/image';
+import { useQuery } from "@tanstack/react-query";
+import { getPosts } from "@/service/post/get";
 
 // Helper function to calculate stats
-const calculateStats = () => {
-  const sales = fakePosts.filter(post => post.category === FoodCategory.Sale);
-  const totalEarnings = sales.length * 25; // Mock average price of $25 per sale
+const calculateStats = (posts: Post[]) => {
+  const sales = posts?.filter((post: Post) => post.category === FoodCategory.Sale);
+  const totalEarnings = (sales?.length || 0) * 25; // Mock average price of $25 per sale
   const monthlyData = [
     { month: 'Jan', sales: 24, earnings: 600, target: 500 },
     { month: 'Feb', sales: 32, earnings: 800, target: 600 },
@@ -43,11 +44,11 @@ const calculateStats = () => {
   ];
 
   return {
-    totalSales: sales.length,
+    totalSales: sales?.length || 0,
     totalEarnings,
     monthlyData,
     categoryData,
-    averagePerSale: totalEarnings / (sales.length || 1),
+    averagePerSale: totalEarnings / (sales?.length || 1),
   };
 };
 
@@ -69,7 +70,13 @@ interface PostFormValues {
 }
 
 export default function ProvidersHomePage() {
-  const stats = calculateStats();
+  const { data: posts } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
+  });
+
+
+  const stats = calculateStats(posts && posts.length > 0 ? posts : []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -79,7 +86,7 @@ export default function ProvidersHomePage() {
       // Here you would typically upload the image to your storage service
       // and get back a URL. For now, we'll use a placeholder
       const imageUrl = "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg";
-      
+
       const post = {
         title: values.title,
         description: values.description,
@@ -114,7 +121,7 @@ export default function ProvidersHomePage() {
             <p className="text-sm sm:text-base text-gray-500 mt-1">Welcome back! Here&apos;s your overview</p>
           </div>
           <div className="flex items-center gap-4">
-            <Button 
+            <Button
               onClick={() => setIsModalOpen(true)}
               className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90"
             >
@@ -230,36 +237,36 @@ export default function ProvidersHomePage() {
                 <ComposedChart data={stats.monthlyData}>
                   <defs>
                     <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="earningsGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#EC4899" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#EC4899" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#EC4899" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#EC4899" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="targetGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#14B8A6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#14B8A6" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#14B8A6" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#14B8A6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis 
-                    dataKey="month" 
+                  <XAxis
+                    dataKey="month"
                     stroke="#6B7280"
                     tick={{ fill: '#6B7280', fontSize: 12 }}
                   />
-                  <YAxis 
-                    yAxisId="left" 
+                  <YAxis
+                    yAxisId="left"
                     stroke="#6B7280"
                     tick={{ fill: '#6B7280', fontSize: 12 }}
                   />
-                  <YAxis 
-                    yAxisId="right" 
-                    orientation="right" 
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
                     stroke="#6B7280"
                     tick={{ fill: '#6B7280', fontSize: 12 }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
                       border: 'none',
@@ -269,8 +276,8 @@ export default function ProvidersHomePage() {
                     formatter={(value: number) => [`$${value}`, '']}
                     labelStyle={{ color: '#374151', fontWeight: 500 }}
                   />
-                  <Legend 
-                    verticalAlign="top" 
+                  <Legend
+                    verticalAlign="top"
                     height={36}
                     iconType="circle"
                     iconSize={8}
@@ -329,18 +336,18 @@ export default function ProvidersHomePage() {
                     dataKey="value"
                   >
                     {stats.categoryData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
+                      <Cell
+                        key={`cell-${index}`}
                         fill={[
                           '#8B5CF6', // Purple
                           '#EC4899', // Pink
                           '#14B8A6', // Teal
                           '#F59E0B'  // Amber
-                        ][index]} 
+                        ][index]}
                       />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
                       border: 'none',
@@ -350,8 +357,8 @@ export default function ProvidersHomePage() {
                     formatter={(value: number) => [`${value}%`, '']}
                     labelStyle={{ color: '#374151', fontWeight: 500 }}
                   />
-                  <Legend 
-                    verticalAlign="bottom" 
+                  <Legend
+                    verticalAlign="bottom"
                     height={36}
                     iconType="circle"
                     iconSize={6}
@@ -384,45 +391,46 @@ export default function ProvidersHomePage() {
             </div>
           </div>
           <div className="space-y-3 sm:space-y-4">
-            {fakePosts
-              .filter(post => post.category === FoodCategory.Sale)
-              .slice(0, 5)
-              .map(post => (
-                <div 
-                  key={post.id} 
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group gap-3 sm:gap-0"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="p-1.5 sm:p-2 bg-white rounded-lg group-hover:scale-105 transition-transform">
-                      <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+            {
+              posts
+                ?.filter((post: Post) => post.category === FoodCategory.Sale)
+                .slice(0, 5)
+                .map((post: Post) => (
+                  <div
+                    key={post.id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group gap-3 sm:gap-0"
+                  >
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="p-1.5 sm:p-2 bg-white rounded-lg group-hover:scale-105 transition-transform">
+                        <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-xs sm:text-sm font-medium text-gray-800">{post.title}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
+                          <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                          <span className="text-xs text-gray-500">Order #1234</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xs sm:text-sm font-medium text-gray-800">{post.title}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
-                        <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-                        <span className="text-xs text-gray-500">Order #1234</span>
+                    <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6">
+                      <div className="text-left sm:text-right">
+                        <p className="text-xs sm:text-sm font-medium text-gray-800">$25.00</p>
+                        <p className="text-xs text-gray-500">Payment completed</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          Completed
+                        </span>
+                        <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6">
-                    <div className="text-left sm:text-right">
-                      <p className="text-xs sm:text-sm font-medium text-gray-800">$25.00</p>
-                      <p className="text-xs text-gray-500">Payment completed</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Completed
-                      </span>
-                      <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
 
@@ -463,8 +471,8 @@ export default function ProvidersHomePage() {
               }
               rules={[{ required: true, message: 'Please enter a title' }]}
             >
-              <Input 
-                placeholder="Enter post title" 
+              <Input
+                placeholder="Enter post title"
                 className="rounded-lg border-gray-200 focus:border-primary focus:ring-primary/20"
                 size="large"
               />
@@ -480,7 +488,7 @@ export default function ProvidersHomePage() {
               }
               rules={[{ required: true, message: 'Please select a category' }]}
             >
-              <Select 
+              <Select
                 placeholder="Select category"
                 className="rounded-lg border-gray-200 focus:border-primary focus:ring-primary/20"
                 size="large"
@@ -516,8 +524,8 @@ export default function ProvidersHomePage() {
               }
               rules={[{ required: true, message: 'Please enter a description' }]}
             >
-              <Input.TextArea 
-                rows={4} 
+              <Input.TextArea
+                rows={4}
                 placeholder="Enter post description"
                 className="rounded-lg border-gray-200 focus:border-primary focus:ring-primary/20 resize-none"
                 size="large"
@@ -537,9 +545,9 @@ export default function ProvidersHomePage() {
               <div className="flex flex-col items-center gap-4">
                 {fileList.length > 0 && fileList[0].url ? (
                   <div className="relative group w-full">
-                    <Image 
-                      src={fileList[0].url} 
-                      alt="Captured photo" 
+                    <Image
+                      src={fileList[0].url}
+                      alt="Captured photo"
                       width={600}
                       height={192}
                       className="w-full h-48 object-cover rounded-lg"
@@ -563,7 +571,7 @@ export default function ProvidersHomePage() {
                       input.type = 'file';
                       input.accept = 'image/*';
                       input.capture = 'environment';
-                      
+
                       input.onchange = (e) => {
                         const file = (e.target as HTMLInputElement).files?.[0];
                         if (file) {
@@ -580,7 +588,7 @@ export default function ProvidersHomePage() {
                           reader.readAsDataURL(file);
                         }
                       };
-                      
+
                       input.click();
                     }}
                     className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-gray-200 rounded-lg hover:border-primary transition-colors w-full bg-gray-50 hover:bg-gray-100"
@@ -604,7 +612,7 @@ export default function ProvidersHomePage() {
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 type="submit"
                 className="px-6 h-10 rounded-lg bg-primary text-white hover:bg-primary/90"
               >
