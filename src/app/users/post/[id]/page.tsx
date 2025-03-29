@@ -2,23 +2,40 @@
 
 import { useParams } from "next/navigation";
 import { Input, Image as AntImage, Divider, Space, Avatar, Drawer } from "antd";
-import { fakeProviders } from "@/constants/User";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, DollarSign, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { getPost } from "@/service/post/getOne";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { postComment } from "@/service/comments/post";
 
 export default function FoodPage() {
   const { id } = useParams();
   const router = useRouter();
+  const { mutate: postCommentFn } = useMutation({
+    mutationFn: postComment,
+    onSuccess: () => {
+      setComment("");
+      window.location.reload();
+    }
+  });
   const { data: post } = useQuery({
     queryKey: ["post"],
     queryFn: () => getPost(id as string),
   });
   const postProvider = post?.provider;
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    postCommentFn({
+      postId: Number(id),
+      content: comment,
+      userId: post?.provider?.id as string,
+    });
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 lg:p-6 w-full min-h-screen lg:h-[calc(100vh-2rem)]">
@@ -28,7 +45,7 @@ export default function FoodPage() {
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-bold">{post?.title}</h1>
             <div className="flex items-center gap-2">
-              <Avatar 
+              <Avatar
                 src={postProvider?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"}
                 size={24}
               />
@@ -36,8 +53,18 @@ export default function FoodPage() {
             </div>
           </div>
           <Space>
-            <Button className="flex items-center gap-2" onClick={() => {router.push(`/users/providers/${postProvider?.id}`)}}>
+            <Button
+              className="flex items-center gap-2"
+              onClick={() => { router.push(`/users/providers/${postProvider?.id}`) }}
+              variant="outline"
+            >
               Ver proveedor
+            </Button>
+            <Button
+              className="flex items-center gap-2"
+              onClick={() => { router.push(`/users/providers/${postProvider?.id}`) }}
+            >
+              Me interesa
             </Button>
           </Space>
         </div>
@@ -83,12 +110,12 @@ export default function FoodPage() {
         <div className="flex-1 overflow-y-auto mb-4">
           <div className="flex flex-col gap-3">
             {post?.comments.map(comment => (
-              <div 
-                key={comment.id} 
+              <div
+                key={comment.id}
                 className="flex items-start gap-3 bg-white rounded-lg p-3 border hover:border-primary hover:shadow-sm transition-all duration-200"
               >
-                <Avatar 
-                  src={comment.user.photo_url} 
+                <Avatar
+                  src={comment.user.photo_url}
                   size={36}
                   className="flex-shrink-0"
                 />
@@ -113,14 +140,16 @@ export default function FoodPage() {
 
         <Divider type="horizontal" className="my-4" />
 
-        <form className="flex flex-col gap-3">
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <div className="flex gap-2 items-center">
             <Input.TextArea
               autoSize={{ minRows: 2, maxRows: 3 }}
               placeholder="Escribe un comentario..."
               className="border-gray-200 focus:border-primary flex-1"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
-            <Button size="icon" className="h-[72px]">
+            <Button size="icon" className="h-[72px]" type="submit">
               <Send className="w-4 h-4" />
             </Button>
           </div>
@@ -130,7 +159,7 @@ export default function FoodPage() {
       {/* Mobile Comments Button */}
       <div className="fixed bottom-0 left-0 right-0 lg:hidden bg-white border-t shadow-lg">
         <div className="max-w-screen-xl mx-auto px-4 py-3">
-          <Button 
+          <Button
             className="w-full flex items-center justify-center gap-2 py-5"
             onClick={() => setIsCommentsOpen(true)}
           >
@@ -157,12 +186,12 @@ export default function FoodPage() {
           <div className="flex-1 overflow-y-auto mb-4">
             <div className="flex flex-col gap-3">
               {post?.comments.map(comment => (
-                <div 
-                  key={comment.id} 
+                <div
+                  key={comment.id}
                   className="flex items-start gap-3 bg-white rounded-lg p-3 border hover:border-primary hover:shadow-sm transition-all duration-200"
                 >
-                  <Avatar 
-                    src={comment.user.photo_url} 
+                  <Avatar
+                    src={comment.user.photo_url}
                     size={36}
                     className="flex-shrink-0"
                   />
@@ -187,14 +216,16 @@ export default function FoodPage() {
 
           <Divider type="horizontal" className="my-4" />
 
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex gap-2 items-center">
               <Input.TextArea
                 autoSize={{ minRows: 2, maxRows: 3 }}
                 placeholder="Escribe un comentario..."
                 className="border-gray-200 focus:border-primary flex-1"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
-              <Button size="icon" className="h-[72px]">
+              <Button size="icon" className="h-[72px]" type="submit">
                 <Send className="w-4 h-4" />
               </Button>
             </div>

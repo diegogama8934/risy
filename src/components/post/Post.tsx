@@ -1,22 +1,25 @@
 import { Button } from "../ui/button";
 import { Input, Divider, Image as AntImage } from "antd";
-import { fakePosts } from "@/constants/Post";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Post as IPost } from "@/interfaces/Post";
 
 
-export function Post({ title, description, images, comments }: IPost) {
-  const { id } = useParams();
+export function Post({ title, description, images, comments, userId, goToProvider, userInterested }: IPost) {
   const router = useRouter();
-  const singleFakePost = fakePosts.find(post => post.id === id);
+
 
   return (
     <div className="flex flex-col gap-4 p-8 w-full border rounded-2xl bg-white">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold ">{title}</h1>
+        <h1 className="text-2xl font-bold text-primary">{title}</h1>
         <Button
-          onClick={() => router.push(`/users/providers/${singleFakePost?.userId}`)}
+          onClick={() => {
+            if (goToProvider) {
+              router.push(`/users/providers/${userId}`)
+            };
+          }}
+          disabled={!userInterested}
         >
           Me interesa
         </Button>
