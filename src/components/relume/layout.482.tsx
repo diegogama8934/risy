@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Layout: NextPage = () => {
   return (
-    <div className="px-[5%] py-16 md:py-24 bg-slate-950 text-white flex flex-col items-center">
+    <div id="sustentabilidad" className="px-[5%] py-16 md:py-24 bg-slate-950 text-white flex flex-col items-center">
         <div className="relative w-full max-w-3xl text-center pb-12 md:pb-16 lg:pb-20">
           <div className="w-7 h-7 absolute -top-7 left-0 bg-lime-500 hidden md:block" />
           <div className="w-7 h-7 absolute -top-14 -left-7 bg-lime-500 hidden md:block" />
