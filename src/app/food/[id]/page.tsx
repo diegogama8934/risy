@@ -1,7 +1,9 @@
+"use client";
 
+import { useParams } from "next/navigation";
 
-export default function FoodPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function FoodPage() {
+  const { id } = useParams();
 
   return (
     <div>
