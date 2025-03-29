@@ -12,7 +12,8 @@ export const fakeProviders: Provider[] = [
     createdAt: new Date("2024-01-15T10:30:00"),
     updatedAt: new Date("2024-01-15T10:30:00"),
     address: "123 Main St, Anytown, USA",
-  }
+    type: "organization"
+  },
 ]
 
 export const fakeComments: Comment[] = [
@@ -25,7 +26,7 @@ export const fakeComments: Comment[] = [
     createdAt: new Date("2024-01-15T10:30:00"),
     updatedAt: new Date("2024-01-15T10:30:00"),
     foodId: "1",
-    
+
   },
   {
     id: "2", 

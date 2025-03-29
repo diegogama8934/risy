@@ -18,7 +18,7 @@ export default function SignupProvidersPage() {
   const router = useRouter();
 
   const onSuccess = () => {
-    router.push("/");
+    router.push("/login/providers");
   };
 
   const { mutate: signupProviderFn, isPending, error } = useMutation({

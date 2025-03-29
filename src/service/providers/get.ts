@@ -2,7 +2,7 @@ import { ApiResponse } from "@/interfaces/Api";
 import { Provider } from "@/interfaces/User";
 
 export async function getProviders() {
-  const response: ApiResponse<Provider[]> = await fetch(`${process.env.API_URL}/providers`, {
+  const response: ApiResponse<Provider[]> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/providers`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

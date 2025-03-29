@@ -22,7 +22,7 @@ export default function SignupPage() {
   const router = useRouter();
 
   const onSuccess = () => {
-    router.push("/login");
+    router.push("/login/users");
   };
 
   const { mutate: signupUser, isPending, error } = useMutation({

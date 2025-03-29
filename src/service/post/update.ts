@@ -2,7 +2,7 @@ import { ApiResponse } from "@/interfaces/Api";
 import { Post } from "@/interfaces/Post";
 
 export async function updatePost(id: string, post: Post) {
-  const response: ApiResponse<Post> = await fetch(`${process.env.API_URL}/posts/${id}`, {
+  const response: ApiResponse<Post> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`, {
     method: "PUT",
     body: JSON.stringify(post),
   })

@@ -2,7 +2,7 @@ import { ApiResponse } from "@/interfaces/Api";
 import { Provider } from "@/interfaces/User";
 
 export async function getProvider(id: string) {
-  const response: ApiResponse<Provider> = await fetch(`${process.env.API_URL}/providers/${id}`, {
+  const response: ApiResponse<Provider> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/providers/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

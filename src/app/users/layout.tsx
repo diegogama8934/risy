@@ -63,7 +63,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Package />
             </Link>
-            <Link href="/users/organizations" className="p-4 rounded-md hover:bg-neutral-100 w-full">
+            <Link href="/users/providers" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Building />
             </Link>
           </nav>

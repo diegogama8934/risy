@@ -7,7 +7,7 @@ import { Search, Loader2 } from "lucide-react";
 import { useState, useCallback } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 
-export default function FoodPage() {
+export default function PostsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearch = useDebounce(searchQuery, 300);

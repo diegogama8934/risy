@@ -17,7 +17,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   const onSuccess = () => {
-    router.push("/");
+    router.push("/providers/home");
   };
 
 

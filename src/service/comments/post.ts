@@ -1,11 +1,10 @@
 import { ApiResponse } from "@/interfaces/Api";
-import { Post } from "@/interfaces/Post";
+import { Comment } from "@/interfaces/User";
 
-
-export async function createPost(post: Post) {
-  const response: ApiResponse<Post> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
+export const postComment = async (comment: Comment) => {
+  const response: ApiResponse<Comment> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
     method: "POST",
-    body: JSON.stringify(post),
+    body: JSON.stringify(comment),
   })
     .then((res) => res.json())
     .catch((err) => new Error(err.message));
@@ -15,4 +14,4 @@ export async function createPost(post: Post) {
   }
 
   return response.data;
-}
+};

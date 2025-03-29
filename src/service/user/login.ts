@@ -2,7 +2,7 @@ import { ApiResponse } from "@/interfaces/Api";
 import { IUser } from "@/interfaces/User";
 
 export async function login(credentials: { email: string, password: string }) {
-  const response: ApiResponse<IUser> = await fetch(`${process.env.API_URL}/users/login`, {
+  const response: ApiResponse<IUser> = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
