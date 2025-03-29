@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col max-h-screen">
-      <header className="px-12 py-4 border-b flex justify-between items-center sticky top-0">
+      <header className="px-12 py-4 border-b flex justify-between items-center sticky top-0 z-10 topbar">
         <h1 className="text-2xl font-bold">Risy</h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -32,7 +32,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         </DropdownMenu>
       </header>
       <div className="flex flex-1">
-        <aside className="flex flex-col justify-between items-center px-[36px] pt-4 border-r sticky top-[69] sidebar">
+        <aside className="flex flex-col justify-between items-center px-2 pt-4 border-r sticky top-[69] sidebar">
           <nav className="flex flex-col gap-4 items-center">
             <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100">
               <Home />
@@ -49,7 +49,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <HelpCircle />
           </Link>
         </aside>
-        <div className="">
+        <div className="w-full">
           {children}
         </div>
       </div>

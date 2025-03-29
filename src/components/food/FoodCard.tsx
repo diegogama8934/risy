@@ -21,7 +21,7 @@ export function FoodCard({ category, description, title, image, id }: Food) {
 
   return (
     <Link
-      href={`/food/${id}`}
+      href={`/users/food/${id}`}
       className="group flex gap-4 p-6 rounded-lg border border-border/40 bg-card hover:border-border/80 transition-all duration-200 shadow-sm hover:shadow-md"
     >
 
