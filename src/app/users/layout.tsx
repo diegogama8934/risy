@@ -1,13 +1,28 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, User, Settings, Home, Package, Building, HelpCircle } from "lucide-react";
+import { LogOut, User, Settings, Home, Package, Building, HelpCircle, Menu } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className="flex flex-col max-h-screen">
-      <header className="px-12 py-4 border-b flex justify-between items-center sticky top-0 z-10 topbar">
-        <h1 className="text-2xl font-bold">Risy</h1>
+      <header className="px-4 md:px-12 py-4 border-b flex justify-between items-center sticky top-0 z-20 bg-background">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <h1 className="text-2xl font-bold">Risy</h1>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost">
@@ -32,9 +47,14 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         </DropdownMenu>
       </header>
       <div className="flex flex-1">
-        <aside className="flex flex-col justify-between items-center px-2 pt-4 border-r sticky top-[69] sidebar">
+        <aside className={`
+          fixed md:static inset-y-0 left-0 z-10
+          flex flex-col justify-between items-center px-2 pt-4 border-r
+          bg-background transition-transform duration-200 ease-in-out
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}>
           <nav className="flex flex-col gap-4 items-center">
-            <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/home" className="p-4 rounded-md hover:bg-neutral-100">
               <Home />
             </Link>
             <Link href="/food" className="p-4 rounded-md hover:bg-neutral-100">
@@ -49,7 +69,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <HelpCircle />
           </Link>
         </aside>
-        <div className="w-full p-8">
+        <div className="w-full p-4 md:p-8">
           {children}
         </div>
       </div>
