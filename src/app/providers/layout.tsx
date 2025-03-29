@@ -1,18 +1,13 @@
 "use client";
 
-
-import { Building, HelpCircle } from "lucide-react";
-
-import { Home, Package } from "lucide-react";
-
+import { HelpCircle } from "lucide-react";
+import { Home, Package, Store } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogOut, Menu, Settings } from "lucide-react";
+import { LogOut, Menu, Settings, ChevronDown, User } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { User } from "lucide-react";
 import Link from "next/link";
-
-
+import { Badge } from "@/components/ui/badge";
 
 export default function ProvidersLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,9 +30,28 @@ export default function ProvidersLayout({ children }: { children: React.ReactNod
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <User />
-              Diego Martínez García
+            <Button 
+              variant="ghost" 
+              className="flex items-center gap-3 px-3 py-2 hover:bg-accent/50 transition-colors"
+            >
+              <div className="relative">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="w-4 h-4 text-primary" />
+                </div>
+                <Badge 
+                  variant="success" 
+                  className="absolute -bottom-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-[10px]"
+                >
+                  P
+                </Badge>
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="text-sm font-medium">Diego Martínez García</span>
+                <div className="flex items-center gap-1.5">
+                  <Badge variant="success" className="text-[10px] px-1.5 py-0">Proveedor</Badge>
+                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                </div>
+              </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -65,16 +79,19 @@ export default function ProvidersLayout({ children }: { children: React.ReactNod
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           <nav className="flex flex-col gap-4 w-full">
-            <Link href="/providers/home" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <Home />
+            <Link href="/providers/home" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Home className="h-6 w-6" />
             </Link>
-            <Link href="/providers/post" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <Package />
+            <Link href="/providers/post" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Package className="h-6 w-6" />
+            </Link>
+            <Link href="/providers/store" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+              <Store className="h-6 w-6" />
             </Link>
           </nav>
 
-          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-            <HelpCircle />
+          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100 w-full flex items-center justify-center">
+            <HelpCircle className="h-6 w-6" />
           </Link>
         </aside>
         <div className="w-full p-4 md:p-8">

@@ -2,9 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, User, Settings, Home, Package, Building, HelpCircle, Menu } from "lucide-react";
+import { LogOut, User, Settings, Home, Package, HelpCircle, Menu, ChevronDown, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,22 +28,50 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <User />
-              Diego Martínez García
+            <Button 
+              variant="ghost" 
+              className="flex items-center gap-3 px-3 py-2 hover:bg-accent/50 transition-colors"
+            >
+              <div className="relative">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="w-4 h-4 text-primary" />
+                </div>
+                <Badge 
+                  variant="success" 
+                  className="absolute -bottom-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-[10px]"
+                >
+                  P
+                </Badge>
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="text-sm font-medium">Diego Martínez García</span>
+                <div className="flex items-center gap-1.5">
+                  <Badge variant="success" className="text-[10px] px-1.5 py-0">Proveedor</Badge>
+                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                </div>
+              </div>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="flex items-center gap-2 p-2 border-b">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="w-4 h-4 text-primary" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">Diego Martínez García</span>
+                <span className="text-xs text-muted-foreground">diego@example.com</span>
+              </div>
+            </div>
             <DropdownMenuItem>
-              <User />
+              <User className="w-4 h-4 mr-2" />
               Perfil
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Settings />
+              <Settings className="w-4 h-4 mr-2" />
               Configuración
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              <LogOut className="text-red-600" />
+            <DropdownMenuItem className="text-red-600 focus:text-red-600">
+              <LogOut className="w-4 h-4 mr-2" />
               Cerrar sesión
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -63,8 +92,11 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Package />
             </Link>
-            <Link href="/users/providers" className="p-4 rounded-md hover:bg-neutral-100 w-full">
-              <Building />
+            <Link href="/users/orders" className="p-4 rounded-md hover:bg-neutral-100 w-full">
+              <ShoppingCart className="w-5 h-5" />
+            </Link>
+            <Link href="/users/profile" className="p-4 rounded-md hover:bg-neutral-100 w-full">
+              <User className="w-5 h-5" />
             </Link>
           </nav>
 
