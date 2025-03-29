@@ -20,8 +20,9 @@ import { Input, Select, Modal, Form, message, UploadFile } from 'antd';
 import { useState } from 'react';
 import { createPost } from '@/service/post/create';
 import Image from 'next/image';
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getPosts } from "@/service/post/get";
+import { uploadImage } from "@/service/providers/uploadPhoto";
 
 // Helper function to calculate stats
 const calculateStats = (posts: Post[]) => {
@@ -75,6 +76,22 @@ export default function ProvidersHomePage() {
     queryFn: () => getPosts(),
   });
 
+  const { mutate: createPostFn } = useMutation({
+    mutationFn: createPost,
+    onSuccess: (newPost:Post) => {
+      const formData = new FormData();
+      formData.append('image', fileList[0].originFileObj as File);
+      uploadImageFn({ formData, postId: newPost.id as string });
+    }
+  });
+
+  const { mutate: uploadImageFn } = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: () => {
+      message.success('Image uploaded successfully!');
+    }
+  });
+
 
   const stats = calculateStats(posts && posts.length > 0 ? posts : []);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,15 +100,18 @@ export default function ProvidersHomePage() {
 
   const handlePublish = async (values: PostFormValues) => {
     try {
-      // Here you would typically upload the image to your storage service
-      // and get back a URL. For now, we'll use a placeholder
-      const imageUrl = "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg";
+      // Crear FormData para las imágenes
+      const formData = new FormData();
+      
+      // Agregar cada imagen al FormData
+      if (fileList.length > 0 && fileList[0].originFileObj) {
+        formData.append('providedImage', fileList[0].originFileObj);
+      }
 
       const post = {
         title: values.title,
         description: values.description,
         category: values.category,
-        images: [imageUrl],
         userId: "user123", // This should come from your auth context
         comments: [],
         userInterested: false,
@@ -100,11 +120,8 @@ export default function ProvidersHomePage() {
         updatedAt: new Date(),
       };
 
-      await createPost(post);
-      message.success('Post published successfully!');
-      setIsModalOpen(false);
-      form.resetFields();
-      setFileList([]);
+      // Primero crear el post
+      createPostFn(post);
     } catch (error: unknown) {
       console.error('Failed to publish post:', error);
       message.error('Failed to publish post');

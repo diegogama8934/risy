@@ -1,3 +1,5 @@
+import { Provider } from "./User";
+
 export interface Post {
   id?: string;
   images?: string[];
@@ -12,6 +14,8 @@ export interface Post {
   userInterested: boolean;
   price?: number;
   originalPrice?: number;
+  providerId?: string;
+  provider?: Provider;
 }
 
 export enum FoodCategory {
