@@ -13,7 +13,7 @@ const Footer = () => {
         {/* Left Section */}
         <div className="flex flex-col gap-4">
           <Image src="/Logo.svg" width={84} height={36} alt="Company Logo" />
-          <p className="text-white text-sm">Av. de las Ciencias Sin Número, Juriquilla, Querétaro, Qro.</p>
+          <p className="text-white text-sm">Av. de las Ciencias s/n, Juriquilla, Querétaro, Qro.</p>
           <p className="text-white text-sm underline">+52 554 803 22 00</p>
           <p className="text-white text-sm underline">axfervagar@risy.com</p>
         </div>
