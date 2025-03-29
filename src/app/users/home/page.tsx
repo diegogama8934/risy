@@ -51,7 +51,7 @@ export default function UserFeedPage() {
 
       <div className="grid grid-cols-3 gap-3 sm:gap-4">
         <Link
-          href="/food/compost"
+          href="/post/compost"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-lime-500 to-lime-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-lime-600 hover:to-lime-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -63,7 +63,7 @@ export default function UserFeedPage() {
           </div>
         </Link>
         <Link
-          href="/food/sale"
+          href="/post/sale"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-rose-600 hover:to-rose-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -75,7 +75,7 @@ export default function UserFeedPage() {
           </div>
         </Link>
         <Link
-          href="/food/donation"
+          href="/post/donation"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-sky-500 to-sky-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-sky-600 hover:to-sky-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
