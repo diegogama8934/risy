@@ -38,7 +38,7 @@ const Navbar = () => {
 
         {/* Mobile Menu open: "block", Menu closed: "hidden" */}
         <div
-          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-slate-950/90 backdrop-blur-md md:mt-0 md:p-0 md:top-0 md:backdrop-blur-none md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'}`}
+          className={`fixed inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-slate-950/90 backdrop-blur-md md:mt-0 md:p-0 md:top-0 md:backdrop-blur-none md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'}`}
         >
           <div className="flex flex-col md:flex-row md:mx-6 justify-center items-center">
             <a className="my-2 text-slate-50 transition-colors duration-300 transform hover:text-lime-600 md:mx-4 md:my-0" href="#risy">
