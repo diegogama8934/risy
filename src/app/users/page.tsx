@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function UserPage() {
-  redirect("/users/feed");
+  redirect("/users/home");
 }

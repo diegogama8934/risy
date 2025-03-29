@@ -29,7 +29,7 @@ export function Post({ title, description, images, comments }: IPost) {
 
         <div className="flex-1 flex gap-2 flex-wrap">
           {
-            images.map(image => {
+            images?.map(image => {
               return (
                 <AntImage
                   key={image}
@@ -51,14 +51,14 @@ export function Post({ title, description, images, comments }: IPost) {
             {comments.map(comment => (
               <div key={comment.id} className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 border">
                 <Image
-                  src={comment.userImage}
-                  alt={comment.username}
+                  src={comment.photoUrl || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdL3FeRfpb0YfZ168d3qcJg20m63e4AAXx8A&s"}
+                  alt={comment.name || "user image"}
                   width={32}
                   height={32}
                   className="rounded-full !w-10 !h-10"
                 />
                 <div className="flex flex-col">
-                  <h4 className="font-bold">{comment.username}</h4>
+                  <h4 className="font-bold">{comment.name || "Anónimo"}</h4>
                   <p className="text-sm">{comment.content}</p>
                 </div>
               </div>

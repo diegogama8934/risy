@@ -1,6 +1,6 @@
 export interface Post {
   id?: string;
-  images: string[];
+  images?: string[];
   title: string;
   description: string;
   category: FoodCategory;
@@ -23,8 +23,16 @@ export enum FoodCategory {
 
 export interface Comment {
   id: string;
-  userId: string;
-  userImage: string;
-  username: string;
   content: string;
+  user: {
+    id: string;
+    photo_url: string;
+    name: string;
+    phoneNumber: string;
+    email: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  photoUrl: string;
+  name?: string;
 }

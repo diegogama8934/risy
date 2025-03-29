@@ -2,35 +2,38 @@
 
 import { PostCard } from "@/components/post/PostCard";
 import { Input } from "@/components/ui/input";
-import { fakePosts } from "@/constants/Post";
 import { Search, Loader2 } from "lucide-react";
 import { useState, useCallback } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
+import { getPosts } from "@/service/post/get";
+import { useQuery } from "@tanstack/react-query";
 
 export default function PostsPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const debouncedSearch = useDebounce(searchQuery, 300);
 
-  const filteredPosts = useCallback(() => {
-    if (!debouncedSearch) return fakePosts;
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
+  });
+
+  const filteredPostsFn = useCallback(() => {
+    if (!debouncedSearch) return posts;
     
-    return fakePosts.filter((post) => 
+    return posts?.filter((post) => 
       post.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
       post.description.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
-  }, [debouncedSearch]);
+  }, [debouncedSearch, posts]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-      setIsLoading(false);
     }, 500);
   };
 
-  const posts = filteredPosts();
+  const filteredPosts = filteredPostsFn();
 
   return (
     <div className="flex flex-col gap-6 p-4 sm:p-6 lg:p-8 pb-8 sm:pb-12 lg:pb-16 w-full bg-white rounded-xl border shadow-sm">
@@ -55,7 +58,7 @@ export default function PostsPage() {
         <div className="flex items-center justify-center py-8 sm:py-12">
           <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-muted-foreground" />
         </div>
-      ) : posts.length === 0 ? (
+      ) : filteredPosts?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-8 sm:py-12 text-center">
           <Search className="h-8 w-8 sm:h-12 sm:w-12 text-muted-foreground mb-3 sm:mb-4" />
           <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">No se encontraron resultados</h3>
@@ -65,7 +68,7 @@ export default function PostsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-          {posts.map((post, index) => (
+          {filteredPosts?.map((post, index) => (
             <div
               key={post.id}
               className={`${

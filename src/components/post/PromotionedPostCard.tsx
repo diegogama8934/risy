@@ -2,11 +2,12 @@ import Image from "next/image";
 import { Post } from "@/interfaces/Post";
 
 export function PromotionedPostCard({ post }: { post: Post }) {
+  const fallbackImage = "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg";
   return (
     <div className="group relative flex flex-row sm:flex-col gap-3 p-2 sm:p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer">
       <div className="relative w-24 h-24 sm:w-full sm:aspect-square overflow-hidden rounded-lg flex-shrink-0">
         <Image
-          src={post.images[0]}
+          src={post.images?.[0] ? post.images?.[0] : fallbackImage}
           alt={post.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"

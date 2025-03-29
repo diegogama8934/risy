@@ -1,3 +1,5 @@
+"use client";
+
 import { PostCard } from "@/components/post/PostCard";
 import { fakePosts } from "@/constants/Post";
 import { Input } from "@/components/ui/input";
@@ -5,8 +7,19 @@ import { Button } from "@/components/ui/button";
 import { PromotionedPostCard } from "@/components/post/PromotionedPostCard";
 import { DollarSign, Gift, Leaf, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { getPosts } from "@/service/post/get";
+import { useQuery } from "@tanstack/react-query";
 
 export default function UserFeedPage() {
+
+
+  const { data: posts } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
+  });
+
+  console.log(posts);
+
   return (
 
     <div className="flex flex-col gap-8 p-4 sm:px-8 sm:pt-8 pb-12 bg-white rounded-xl border shadow-sm">
@@ -23,8 +36,8 @@ export default function UserFeedPage() {
             <h1 className="text-base sm:text-lg text-neutral-800 font-bold">Alimentos promocionados</h1>
             <span className="px-2 py-0.5 text-xs font-medium bg-lime-100 text-lime-700 rounded-full">Nuevo</span>
           </div>
-          <Link 
-            href="/food/promoted" 
+          <Link
+            href="/food/promoted"
             className="flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
           >
             <span>Ver todos</span>
@@ -33,13 +46,13 @@ export default function UserFeedPage() {
         </div>
 
         <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide">
-          {fakePosts.map(fakePost => <PromotionedPostCard key={fakePost.id} post={fakePost} />)}
+          {posts?.map(post => <PromotionedPostCard key={post.id} post={post} />)}
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3 sm:gap-4">
-        <Link 
-          href="/food/compost" 
+        <Link
+          href="/food/compost"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-lime-500 to-lime-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-lime-600 hover:to-lime-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -50,8 +63,8 @@ export default function UserFeedPage() {
             <span className="text-sm font-semibold text-white">Composta</span>
           </div>
         </Link>
-        <Link 
-          href="/food/sale" 
+        <Link
+          href="/food/sale"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-rose-600 hover:to-rose-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -62,8 +75,8 @@ export default function UserFeedPage() {
             <span className="text-sm font-semibold text-white">Venta</span>
           </div>
         </Link>
-        <Link 
-          href="/food/donation" 
+        <Link
+          href="/food/donation"
           className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-sky-500 to-sky-600 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:from-sky-600 hover:to-sky-700"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -77,18 +90,16 @@ export default function UserFeedPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {fakePosts.map((fakePost, index) => (
-          <div 
-            key={fakePost.id}
-            className={`${
-              index % 3 === 1 ? 'sm:translate-y-8' : ''
-            } transition-transform duration-300`}
+        {posts?.map((post, index) => (
+          <div
+            key={post.id}
+            className={`${index % 3 === 1 ? 'sm:translate-y-8' : ''
+              } transition-transform duration-300`}
           >
-            <PostCard {...fakePost} />
+            <PostCard {...post} />
           </div>
         ))}
       </div>
     </div>
   );
 }
-// bg-[#84CC18]

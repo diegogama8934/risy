@@ -1,17 +1,23 @@
 "use client";
 
-import { fakePosts } from "@/constants/Post";
 import { useParams } from "next/navigation";
 import { Input, Image as AntImage, Divider, Space, Avatar, Drawer } from "antd";
-import { fakeComments, fakeProviders } from "@/constants/User";
+import { fakeProviders } from "@/constants/User";
 import { Button } from "@/components/ui/button";
-import { Share2, Clock, Users, DollarSign, Send, MessageCircle } from "lucide-react";
+import { Clock, Users, DollarSign, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { getPost } from "@/service/post/getOne";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export default function FoodPage() {
   const { id } = useParams();
-  const singleFakePost = fakePosts.find(post => post.id === id);
-  const postProvider = fakeProviders.find(provider => provider.id === singleFakePost?.userId);
+  const router = useRouter();
+  const { data: post } = useQuery({
+    queryKey: ["post"],
+    queryFn: () => getPost(id as string),
+  });
+  const postProvider = post?.provider;
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
   return (
@@ -20,7 +26,7 @@ export default function FoodPage() {
       <div className="flex-1 border rounded-2xl bg-white p-4 flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col gap-1">
-            <h1 className="text-xl font-bold">{singleFakePost?.title}</h1>
+            <h1 className="text-xl font-bold">{post?.title}</h1>
             <div className="flex items-center gap-2">
               <Avatar 
                 src={postProvider?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"}
@@ -30,12 +36,8 @@ export default function FoodPage() {
             </div>
           </div>
           <Space>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Share2 className="w-4 h-4" />
-              <span className="hidden sm:inline">Compartir</span>
-            </Button>
-            <Button className="flex items-center gap-2">
-              Me interesa
+            <Button className="flex items-center gap-2" onClick={() => {router.push(`/users/providers/${postProvider?.id}`)}}>
+              Ver proveedor
             </Button>
           </Space>
         </div>
@@ -51,18 +53,18 @@ export default function FoodPage() {
           </div>
           <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
             <DollarSign className="w-4 h-4" />
-            <span>${singleFakePost?.price || '0'}</span>
+            <span>${post?.price || '0'}</span>
           </div>
         </div>
 
         <div className="mb-4">
-          <p className="text-gray-600 text-base">{singleFakePost?.description}</p>
+          <p className="text-gray-600 text-base">{post?.description}</p>
         </div>
 
         <div className="flex-1 relative rounded-lg overflow-hidden">
           <AntImage
-            src={singleFakePost?.images[0]}
-            alt={singleFakePost?.title || 'Food image'}
+            src={post?.photoUrls?.[0] || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdL3FeRfpb0YfZ168d3qcJg20m63e4AAXx8A&s"}
+            alt={post?.title || 'Food image'}
             width="100%"
             height="100%"
             className="object-cover hover:scale-[1.02] transition-transform duration-200"
@@ -75,24 +77,24 @@ export default function FoodPage() {
       <div className="hidden lg:flex w-[400px] border rounded-2xl bg-white p-4 flex-col">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold">Comentarios</h3>
-          <span className="text-sm text-gray-500">{fakeComments.length} comentarios</span>
+          <span className="text-sm text-gray-500">{post?.comments.length} comentarios</span>
         </div>
 
         <div className="flex-1 overflow-y-auto mb-4">
           <div className="flex flex-col gap-3">
-            {fakeComments.map(comment => (
+            {post?.comments.map(comment => (
               <div 
                 key={comment.id} 
                 className="flex items-start gap-3 bg-white rounded-lg p-3 border hover:border-primary hover:shadow-sm transition-all duration-200"
               >
                 <Avatar 
-                  src={comment.userImage} 
+                  src={comment.user.photo_url} 
                   size={36}
                   className="flex-shrink-0"
                 />
                 <div className="flex flex-col flex-grow">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-bold text-sm">{comment.username}</h4>
+                    <h4 className="font-bold text-sm">{comment.user.name}</h4>
                     <span className="text-xs text-gray-400">
                       {new Date(comment.createdAt).toLocaleDateString('es-ES', {
                         day: 'numeric',
@@ -133,7 +135,7 @@ export default function FoodPage() {
             onClick={() => setIsCommentsOpen(true)}
           >
             <MessageCircle className="w-5 h-5" />
-            <span>Ver comentarios ({fakeComments.length})</span>
+            <span>Ver comentarios ({post?.comments.length})</span>
           </Button>
         </div>
       </div>
@@ -149,24 +151,24 @@ export default function FoodPage() {
       >
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-center mb-4">
-            <span className="text-sm text-gray-500">{fakeComments.length} comentarios</span>
+            <span className="text-sm text-gray-500">{post?.comments.length} comentarios</span>
           </div>
 
           <div className="flex-1 overflow-y-auto mb-4">
             <div className="flex flex-col gap-3">
-              {fakeComments.map(comment => (
+              {post?.comments.map(comment => (
                 <div 
                   key={comment.id} 
                   className="flex items-start gap-3 bg-white rounded-lg p-3 border hover:border-primary hover:shadow-sm transition-all duration-200"
                 >
                   <Avatar 
-                    src={comment.userImage} 
+                    src={comment.user.photo_url} 
                     size={36}
                     className="flex-shrink-0"
                   />
                   <div className="flex flex-col flex-grow">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-bold text-sm">{comment.username}</h4>
+                      <h4 className="font-bold text-sm">{comment.user.name}</h4>
                       <span className="text-xs text-gray-400">
                         {new Date(comment.createdAt).toLocaleDateString('es-ES', {
                           day: 'numeric',
