@@ -11,7 +11,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="flex flex-col max-h-screen">
-      <header className="px-4 md:px-12 py-4 border-b flex justify-between items-center sticky top-0 z-20 bg-background">
+      <header className="px-4 md:px-12 py-4 border-b flex justify-between items-center sticky top-0 z-50 bg-background">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
@@ -21,7 +21,9 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-2xl font-bold">Risy</h1>
+          <Link href="/users/home">
+            <h1 className="text-2xl font-bold">Risy</h1>
+          </Link>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -48,24 +50,25 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
       </header>
       <div className="flex flex-1">
         <aside className={`
-          fixed md:static inset-y-0 left-0 z-10
+          fixed md:static inset-y-0 left-0 z-40
           flex flex-col justify-between items-center px-2 pt-4 border-r
           bg-background transition-transform duration-200 ease-in-out md:sidebar
+          w-16 md:w-16
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
-          <nav className="flex flex-col gap-4 items-center">
-            <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100">
+          <nav className="flex flex-col gap-4 w-full">
+            <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Home />
             </Link>
-            <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Package />
             </Link>
-            <Link href="/users/organizations" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/users/organizations" className="p-4 rounded-md hover:bg-neutral-100 w-full">
               <Building />
             </Link>
           </nav>
 
-          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100">
+          <Link href="/help" className="p-4 rounded-md hover:bg-neutral-100 w-full">
             <HelpCircle />
           </Link>
         </aside>

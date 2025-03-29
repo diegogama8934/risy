@@ -2,8 +2,8 @@
 
 import { fakePosts } from "@/constants/Post";
 import { useParams } from "next/navigation";
-import { Input, Image as AntImage, Divider, Badge, Space, Avatar, Drawer } from "antd";
-import { fakeComments } from "@/constants/User";
+import { Input, Image as AntImage, Divider, Space, Avatar, Drawer } from "antd";
+import { fakeComments, fakeProviders } from "@/constants/User";
 import { Button } from "@/components/ui/button";
 import { Share2, Clock, Users, DollarSign, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { useState } from "react";
 export default function FoodPage() {
   const { id } = useParams();
   const singleFakePost = fakePosts.find(post => post.id === id);
+  const postProvider = fakeProviders.find(provider => provider.id === singleFakePost?.userId);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
   return (
@@ -20,7 +21,13 @@ export default function FoodPage() {
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-bold">{singleFakePost?.title}</h1>
-            <Badge count={`$${singleFakePost?.price || '0'}`} color="#22c55e" />
+            <div className="flex items-center gap-2">
+              <Avatar 
+                src={postProvider?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"}
+                size={24}
+              />
+              <span className="text-sm text-gray-600">{postProvider?.name || 'Unknown Provider'}</span>
+            </div>
           </div>
           <Space>
             <Button variant="outline" className="flex items-center gap-2">
