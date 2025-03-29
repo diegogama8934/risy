@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
 
 
 export default function FoodPage() {
-  redirect("/users/home");
+  return (
+    <div>
+      <h1>Alimentos</h1>
+    </div>
+  )
 }

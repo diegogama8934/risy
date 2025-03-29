@@ -3,7 +3,7 @@ import { fakeFoods } from "@/constants/Food";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PromotionedFoodCard } from "@/components/food/PromotionedFoodCard";
-import { DollarSign, Gift, Leaf, LogOut, ChevronRight } from "lucide-react";
+import { DollarSign, Gift, Leaf, ChevronRight } from "lucide-react";
 import Link from "next/link";
 export default function UserFeedPage() {
 
@@ -11,12 +11,8 @@ export default function UserFeedPage() {
 
   return (
     <div className="flex flex-col gap-4 px-8 pt-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Risy</h1>
-        <Button variant="outline" size="icon">
-          <LogOut />
-        </Button>
-      </div>
+      <h1 className="text-2xl font-bold">Bienvenido de nuevo, Diego</h1>
+
       <form className="flex gap-2">
         <Input placeholder="Busca un alimento" />
         <Button type="submit">Buscar</Button>
@@ -24,7 +20,7 @@ export default function UserFeedPage() {
 
       <div className="flex flex-col gap-2 rounded-md">
         <div className="flex justify-between items-center mb-2">
-          <h1 className="text-2xl font-bold">Alimentos promocionados</h1>
+          <h1 className="text-lg text-neutral-800 font-bold">Alimentos promocionados</h1>
           <button><ChevronRight className="w-6 h-6 !text-neutral-500" /></button>
         </div>
         <div className="flex gap-4 overflow-x-auto">
