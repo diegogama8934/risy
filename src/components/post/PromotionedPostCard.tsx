@@ -16,11 +16,10 @@ export function PromotionedPostCard({ post }: { post: Post }) {
       </div>
 
       <div className="flex flex-col gap-2">
-        <h1>{post.title}</h1>
+        <h1 className="font-bold text-xs lg:text-xl">{post.title}</h1>
 
         <div className="flex flex-col gap-1 sm:gap-2 flex-grow">
           <div className="flex items-start justify-between gap-2">
-            <h2 className="text-base sm:text-lg font-semibold text-gray-800 line-clamp-2 flex-grow">{post.title}</h2>
             <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs font-medium text-primary shadow-sm whitespace-nowrap">
               Promoted
             </div>
