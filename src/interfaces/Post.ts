@@ -10,6 +10,8 @@ export interface Post {
   comments: Comment[];
   goToProvider: boolean;
   userInterested: boolean;
+  price?: number;
+  originalPrice?: number;
 }
 
 export enum FoodCategory {
