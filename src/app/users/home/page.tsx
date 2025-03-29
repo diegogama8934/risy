@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function UserFeedPage() {
   return (
 
-    <div className="flex flex-col gap-8 p-4 sm:px-8 sm:pt-8 bg-white rounded-xl border shadow-sm">
+    <div className="flex flex-col gap-8 p-4 sm:px-8 sm:pt-8 pb-12 bg-white rounded-xl border shadow-sm">
       <h1 className="text-xl sm:text-2xl font-bold">Bienvenido de nuevo, Diego</h1>
 
       <form className="flex flex-col sm:flex-row gap-2">

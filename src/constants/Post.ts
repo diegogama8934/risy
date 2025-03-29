@@ -7,8 +7,8 @@ export const fakePosts: Post[] = [
     description: "Slightly bruised apples that are still good for composting. Available for pickup in the Seattle area.",
     title: "Bruised Apples for Composting",
     images: [
-      "https://images.unsplash.com/photo-1576179635662-9d1983e97e1e",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea",
+      "https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg",
+      "https://images.pexels.com/photos/327098/pexels-photo-327098.jpeg",
     ],
     userId: "user123",
     comments: [
@@ -16,14 +16,14 @@ export const fakePosts: Post[] = [
         content: "Is this still available?", 
         id: "comment1", 
         userId: "user456", 
-        userImage: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
+        userImage: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
         username: "GreenThumb" 
       },
       { 
         content: "I can pick up tomorrow!", 
         id: "comment2", 
         userId: "user789", 
-        userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+        userImage: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg",
         username: "CompostQueen" 
       },
     ],
@@ -38,7 +38,7 @@ export const fakePosts: Post[] = [
     description: "Unopened canned goods from a recent food drive. Must pick up by this weekend.",
     title: "Canned Food Donation",
     images: [
-      "https://images.unsplash.com/photo-1584263347416-85a3779133e4",
+      "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg",
     ],
     userId: "user456",
     comments: [],
@@ -53,8 +53,8 @@ export const fakePosts: Post[] = [
     description: "Homemade sourdough bread, baked fresh this morning. $5 each.",
     title: "Fresh Sourdough Bread",
     images: [
-      "https://images.unsplash.com/photo-1585478259715-876acc5be8eb",
-      "https://images.unsplash.com/photo-1586444248902-2f64eddc13df",
+      "https://images.pexels.com/photos/46174/strawberries-berries-fruit-freshness-46174.jpeg",
+      "https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg",
     ],
     userId: "user789",
     comments: [
@@ -62,7 +62,7 @@ export const fakePosts: Post[] = [
         content: "Do you deliver?",
         id: "comment3",
         userId: "user123",
-        userImage: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
+        userImage: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
         username: "BreadLover"
       }
     ],

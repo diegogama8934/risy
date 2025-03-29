@@ -1,10 +1,16 @@
+'use client'
+
 import { Chip } from "../common/Chip";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Images } from "lucide-react";
 import { Post, FoodCategory } from "@/interfaces/Post";
+import { useState } from "react";
 
 export function PostCard({ category, description, title, images, id }: Post) {
+  const [imageError, setImageError] = useState(false);
+  const fallbackImage = "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg";
+
   function getClassName(): string {
     if (category == FoodCategory.Compost) return "bg-lime-700 text-white";
     if (category == FoodCategory.Donation) return "bg-sky-700 text-white";
@@ -28,13 +34,21 @@ export function PostCard({ category, description, title, images, id }: Post) {
       <div className="sm:hidden">
         <div className="relative w-full h-40">
           <Image
-            src={images[0]}
+            src={imageError ? fallbackImage : images[0]}
             alt={title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="100vw"
+            onError={() => setImageError(true)}
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+          {images.length > 1 && (
+            <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full flex items-center gap-1 text-xs">
+              <Images className="w-3 h-3" />
+              <span>{images.length}</span>
+            </div>
+          )}
           <div className="absolute bottom-0 left-0 right-0 p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold text-white">{title}</h3>
@@ -52,12 +66,20 @@ export function PostCard({ category, description, title, images, id }: Post) {
       <div className="hidden sm:block">
         <div className="relative w-full h-[280px]">
           <Image
-            src={images[0]}
+            src={imageError ? fallbackImage : images[0]}
             alt={title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"
+            onError={() => setImageError(true)}
+            priority
           />
+          {images.length > 1 && (
+            <div className="absolute top-3 right-3 bg-black/60 text-white px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-sm">
+              <Images className="w-4 h-4" />
+              <span>{images.length}</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
             <div className="flex items-center justify-between mb-3">
