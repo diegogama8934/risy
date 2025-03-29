@@ -54,13 +54,13 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           <nav className="flex flex-col gap-4 items-center">
-            <Link href="/home" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/users/home" className="p-4 rounded-md hover:bg-neutral-100">
               <Home />
             </Link>
-            <Link href="/food" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/users/post" className="p-4 rounded-md hover:bg-neutral-100">
               <Package />
             </Link>
-            <Link href="/organizations" className="p-4 rounded-md hover:bg-neutral-100">
+            <Link href="/users/organizations" className="p-4 rounded-md hover:bg-neutral-100">
               <Building />
             </Link>
           </nav>
