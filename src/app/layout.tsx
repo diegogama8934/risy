@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TanstackProvider } from "@/providers/TanstackProvider";
+import { AntdRegistry} from "@ant-design/nextjs-registry";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,7 +28,9 @@ export default function RootLayout({
     <html lang="es">
       <body className={`bg-neutral-50 ${geistSans.variable} ${geistMono.variable}`}>
         <TanstackProvider>
-          {children}
+          <AntdRegistry>
+            {children}
+          </AntdRegistry>
         </TanstackProvider>
       </body>
     </html>

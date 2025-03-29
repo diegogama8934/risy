@@ -49,7 +49,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <HelpCircle />
           </Link>
         </aside>
-        <div className="w-full">
+        <div className="w-full p-8">
           {children}
         </div>
       </div>
