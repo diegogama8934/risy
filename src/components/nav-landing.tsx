@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from './ui/button';
 
 
 const Navbar = () => {
@@ -53,12 +53,8 @@ const Navbar = () => {
             <a className="my-2 text-slate-50 transition-colors duration-300 transform hover:text-lime-600 md:mx-4 md:my-0" href="#sustentabilidad">
               Sustentabilidad
             </a>
-            <Button variant="outline" className='w-full md:hidden xl:block md:w-auto my-2 md:mx-4 md:my-0'>
-              Registrarse
-            </Button>
-            <Button className='w-full md:w-auto my-2 md:mx-4 md:my-0'>
-              Iniciar sesión
-            </Button>
+            <Link href="/signup" className='w-full md:w-auto md:hidden xl:block text-center my-2 text-slate-50 transition-colors duration-300 transform hover:text-lime-600 md:mx-4 md:my-0 border border-lime-500 px-4 py-2'>Registrarse</Link>
+            <Link href="/login" className='w-full md:w-auto text-center my-2 transition-colors duration-300 transform hover:text-white md:mx-4 md:my-0 bg-lime-500 px-4 py-2'>Iniciar sesión</Link>
           </div>
         </div>
       </div>

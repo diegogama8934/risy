@@ -15,7 +15,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="mt-12 border-t border-white pt-6 flex flex-col md:flex-row justify-between text-gray-200 text-xs">
-        <p>© 2024 Risy. Todos los derechos reservados.</p>
+        <p>© 2025 Risy. Todos los derechos reservados.</p>
         <div className="flex gap-6">
           {['Política de privacidad', 'Términos de servicio', 'Configuración de cookies'].map((item) => (
             <a key={item} href="#" className="underline hover:text-white">{item}</a>
