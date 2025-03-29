@@ -17,7 +17,7 @@ export default function ProvidersPage() {
     
     return fakeProviders.filter((provider) => 
       provider.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-      provider.description.toLowerCase().includes(debouncedSearch.toLowerCase())
+      (provider.description?.toLowerCase() || '').includes(debouncedSearch.toLowerCase())
     );
   }, [debouncedSearch]);
 
@@ -72,7 +72,14 @@ export default function ProvidersPage() {
                 index % 3 === 1 ? 'sm:translate-y-8' : ''
               } transition-transform duration-300 hover:scale-[1.02]`}
             >
-              <ProviderCard {...provider} />
+              <ProviderCard 
+                id={provider.id || `provider-${index}`}
+                name={provider.name}
+                email={provider.email}
+                phone={provider.phoneNumber}
+                description={provider.description || ''}
+                image={provider.image}
+              />
             </div>
           ))}
         </div>
