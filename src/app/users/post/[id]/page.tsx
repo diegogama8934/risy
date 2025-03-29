@@ -9,6 +9,7 @@ import { getPost } from "@/service/post/getOne";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { postComment } from "@/service/comments/post";
+import { likePost } from "@/service/user/like";
 
 export default function FoodPage() {
   const { id } = useParams();
@@ -23,6 +24,12 @@ export default function FoodPage() {
   const { data: post } = useQuery({
     queryKey: ["post"],
     queryFn: () => getPost(id as string),
+  });
+  const { mutate: likePostFn } = useMutation({
+    mutationFn: (postId: string) => likePost(postId, post?.provider?.id as string),
+    onSuccess: () => {
+      router.push(`/users/providers/${post?.provider?.id}`);
+    }
   });
   const postProvider = post?.provider;
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
@@ -62,7 +69,11 @@ export default function FoodPage() {
             </Button>
             <Button
               className="flex items-center gap-2"
-              onClick={() => { router.push(`/users/providers/${postProvider?.id}`) }}
+              onClick={() => {
+                const user = localStorage.getItem("user");
+                const userData = JSON.parse(user as string);
+                likePostFn(post?.id as string, userData.id);
+              }}
             >
               Me interesa
             </Button>
